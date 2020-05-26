@@ -1,5 +1,6 @@
 import React from "react";
 import {render, unmountComponentAtNode} from "react-dom";
+import {fireEvent} from "@testing-library/react";
 import {act} from "react-dom/test-utils";
 
 import Toggle from "./toggle";
@@ -31,7 +32,12 @@ it("changes value when clicked", () => {
     expect(button.innerHTML).toBe("Turn on");
 
     act(() => {
-        button.dispatchEvent(new MouseEvent("click", {bubbles: true}));
+        fireEvent(
+            button,
+            new MouseEvent('click', {
+                bubbles: true,
+            })
+        )
     });
 
     expect(onChange).toHaveBeenCalledTimes(1);
@@ -39,7 +45,12 @@ it("changes value when clicked", () => {
 
     act(() => {
         for (let i = 0; i < 5; i++) {
-            button.dispatchEvent(new MouseEvent("click", {bubbles: true}));
+            fireEvent(
+                button,
+                new MouseEvent('click', {
+                    bubbles: true,
+                })
+            )
         }
     });
 

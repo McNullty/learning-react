@@ -29,10 +29,9 @@ const catArrow = {
     }
 }
 
-// Test is failing with TypeError
-// test('Calling arrow function inside object', () => {
-//    expect(catArrow.jumps()).toThrow(TypeError)
-// });
+test.skip('Calling arrow function inside object', () => {
+   expect(catArrow.jumps()).toThrow(TypeError)
+});
 
 const catRegular = {
     lives: 9,

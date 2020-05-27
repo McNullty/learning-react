@@ -8,7 +8,7 @@ test('Testing simple addition', () => {
 test('Testing simple division', () => {
     const result = 5 / 2;
 
-    expect(result).toBe(2.5);
+    expect(result).toBeCloseTo(2.5);
 });
 
 test('Testing integer division', () => {

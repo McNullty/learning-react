@@ -27,9 +27,10 @@ const list = [
     },
 ];
 
-const App = () => {
-  return helloWorld3();
-}
+const App = () => (
+    helloWorld3()
+)
+
 
 export default App;
 
@@ -62,23 +63,21 @@ export function helloWorld2() {
     );
 }
 
-export const helloWorld3 = () => {
-    return (
-        <div>
-            <h1>My Hacker Stories</h1>
+export const helloWorld3 = () => (
+    <div>
+        <h1>My Hacker Stories</h1>
 
-            <label htmlFor="search">Search: </label>
-            <input id="search" type="text" />
+        <label htmlFor="search">Search: </label>
+        <input id="search" type="text" />
 
-            <hr />
+        <hr />
 
-            <List />
-        </div>
-    );
-}
+        <List />
+    </div>
+)
 
-const List = () => {
-    return list.map(item => (
+const List = () =>
+    list.map(item => (
         <div key={item.objectID}>
                 <span>
                 <a href={item.url}>{item.title}</a>
@@ -88,4 +87,3 @@ const List = () => {
             <span>{item.points}</span>
         </div>
     ));
-}

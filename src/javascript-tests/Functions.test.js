@@ -22,3 +22,28 @@ test('Testing regular function', () => {
 });
 
 
+const catArrow = {
+    lives: 9,
+    jumps: () => {
+        this.lives--;
+    }
+}
+
+// Test is failing with TypeError
+// test('Calling arrow function inside object', () => {
+//    expect(catArrow.jumps()).toThrow(TypeError)
+// });
+
+const catRegular = {
+    lives: 9,
+    jumps: function jumps() {
+        this.lives--;
+    }
+}
+
+test('Calling regular function inside object', () => {
+    catRegular.jumps();
+
+    expect(catRegular.lives).toEqual(8);
+});
+

@@ -46,3 +46,53 @@ test('Calling regular function inside object', () => {
     expect(catRegular.lives).toEqual(8);
 });
 
+test('Unpacking fields from objects passed as function parameter', () => {
+    const user = {
+        id: 42,
+        displayName: 'jdoe',
+        fullName: {
+            firstName: 'John',
+            lastName: 'Doe'
+        }
+    };
+
+    function userId({id}) {
+        return id;
+    }
+
+    function whois({displayName, fullName: {firstName: name}}) {
+        return `${displayName} is ${name}`;
+    }
+
+    expect(userId(user)).toEqual(42);
+    expect(whois(user)).toEqual("jdoe is John");
+});
+
+test('Nested object and array destructuring', () => {
+    const metadata = {
+        title: 'Scratchpad',
+        translations: [
+            {
+                locale: 'de',
+                localization_tags: [],
+                last_edit: '2014-04-14T08:43:37',
+                url: '/de/docs/Tools/Scratchpad',
+                title: 'JavaScript-Umgebung'
+            }
+        ],
+        url: '/en-US/docs/Tools/Scratchpad'
+    };
+
+    let {
+        title: englishTitle, // rename
+        translations: [
+            {
+                title: localeTitle, // rename
+            },
+        ],
+    } = metadata;
+
+    expect(englishTitle).toEqual("Scratchpad");
+    expect(localeTitle).toEqual("JavaScript-Umgebung");
+});
+

@@ -106,6 +106,18 @@ test('You cant change object properties', () => {
     expect(b).toBeUndefined();
 });
 
+test('Spread destructing', () => {
+    const user = {
+        id: 42,
+        is_verified: true
+    };
+
+    const {id, is_verified} = {...user};
+
+    expect(id).toEqual(42);
+    expect(is_verified).toBeTruthy();
+});
+
 test('Assigning to new variable names', () => {
     const o = {p: 42, q: true};
     const {q: bar, p: foo} = o;

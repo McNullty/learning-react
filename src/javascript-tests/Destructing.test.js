@@ -94,6 +94,18 @@ test('Basic object destructing', () => {
     expect(is_verified).toBeTruthy();
 });
 
+test('You cant change object properties', () => {
+    const user = {
+        id: 42,
+        is_verified: true
+    };
+
+    const {a, b} = user;
+
+    expect(a).toBeUndefined();
+    expect(b).toBeUndefined();
+});
+
 test('Assigning to new variable names', () => {
     const o = {p: 42, q: true};
     const {q: bar, p: foo} = o;

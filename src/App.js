@@ -35,7 +35,6 @@ const useSemiPersistentState = key => {
 
     React.useEffect(() => {
         localStorage.setItem(key, value);
-        console.log('Calling effect method')
     }, [key, value]);
 
     return [value, setValue];
@@ -60,11 +59,24 @@ const initialStories = [
     },
 ];
 
+const getAsyncStories = () =>
+    new Promise(resolve =>
+        setTimeout(
+            () =>resolve({data: {stories: initialStories}}),
+            2000)
+    );
+
 const App = () => {
 
     const [searchTerm, setSearchTerm] = useSemiPersistentState('search');
 
-    const [stories, setStories] = React.useState(initialStories);
+    const [stories, setStories] = React.useState([]);
+
+    React.useEffect(() => {
+        getAsyncStories().then(result => {
+            setStories(result.data.stories)
+        });
+    }, []);
 
     const handleSearch = event => {
         setSearchTerm(event.target.value);
@@ -96,6 +108,9 @@ const App = () => {
             <hr/>
 
             <List list={searchStories} onRemoveStory={handleRemoveStory}/>
+
+            <hr/>
+            <div>Footer</div>
         </div>
     );
 

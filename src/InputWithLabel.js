@@ -1,8 +1,16 @@
 import React from "react";
 
-export const InputWithLabel = ({id, label, value, type = 'text',  onInputChange}) => (
+export const InputWithLabel =
+    ({
+        id,
+        value,
+        type = 'text',
+        onInputChange,
+        children,
+    }) => (
     <>
-        <label htmlFor={id}>{label} </label>
+        <label htmlFor={id}>{children} </label>
+        &nbsp;
         <input
             id={id}
             type={type}
@@ -10,4 +18,4 @@ export const InputWithLabel = ({id, label, value, type = 'text',  onInputChange}
             onChange={onInputChange}
         />
     </>
-);
+    );

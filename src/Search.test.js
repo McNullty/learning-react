@@ -1,6 +1,6 @@
 import React from "react";
 import {fireEvent, render} from "@testing-library/react";
-import { Search } from "./Search";
+import { InputWithLabel } from "./InputWithLabel";
 import {unmountComponentAtNode} from "react-dom";
 import {act} from "react-dom/test-utils";
 
@@ -22,7 +22,7 @@ afterEach(() => {
 test('Testing Search component', () => {
     act(() => {
         render(
-            <Search />,
+            <InputWithLabel />,
             container
         );
     });

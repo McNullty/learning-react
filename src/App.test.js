@@ -1,36 +1,38 @@
 import React from "react";
-import { render } from "@testing-library/react";
-import { App, helloWorld0, helloWorld1 } from "./App";
+import renderer from "react-test-renderer"
 
-//Default test
-// test("renders learn react link", () => {
-//   const { getByText } = render(<App />);
-//   const linkElement = getByText(/learn react/i);
-//   expect(linkElement).toBeInTheDocument();
-// });
+import { App, List, Item} from "./App";
 
-test("testing hello world function", () => {
-  const result = helloWorld0();
+describe('Item', () => {
+  const item = {
+    title: 'React',
+    url: 'https://reactjs.org/',
+    author: 'Jordan Walke',
+    num_comments: 3,
+    points: 4,
+    objectID: 0,
+  }
 
-  expect(result).toMatchInlineSnapshot(`
-    <div>
-      <h1>
-        Hello World!
-      </h1>
-    </div>
-  `);
-});
+  const handleRemoveItem = jest.fn();
 
+  let component;
 
-test("testing hello world 1 function", () => {
-  const result = helloWorld1();
+  beforeEach(() => {
+    component = renderer.create(<Item item={item} onRemoveItem={handleRemoveItem} />);
+  });
 
-  expect(result).toMatchInlineSnapshot(`
-    <div>
-      <h1>
-        Hello 
-        React
-      </h1>
-    </div>
-  `);
+  it('renders all properties', () => {
+    expect(component.root.findByType('a').props.href).toEqual('https://reactjs.org/');
+
+    expect(component.root.findAllByProps({children: 'Jordan Walke'}).length).toEqual(1);
+  });
+
+  it('calls onRemoveItem on button click', () => {
+    component.root.findByType('button').props.onClick();
+
+    expect(handleRemoveItem).toHaveBeenCalledTimes(1);
+    expect(handleRemoveItem).toHaveBeenCalledWith(item);
+
+    expect(component.root.findAllByType(Item).length).toEqual(1);
+  });
 });

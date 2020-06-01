@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import './App.css';
 import {InputWithLabel} from "./InputWithLabel";
 
@@ -114,22 +115,21 @@ const App = () => {
         { data: [], isLoading: false, isError: false }
         );
 
-    const handleFetchStories = React.useCallback(() => {
-        if (!searchTerm) return;
-
+    const handleFetchStories = React.useCallback(async () => {
+        
         dispatchStories({ type: 'STORIES_FETCH_INIT' });
 
-        fetch(url)
-            .then(response => response.json())
-            .then(result => {
-                dispatchStories({
-                    type: 'STORIES_FETCH_SUCCESS',
-                    payload: result.hits,
-                });
-            })
-            .catch(() =>
-                dispatchStories({ type: 'STORIES_FETCH_FAILURE' })
-            );
+        try {
+            const result = await axios.get(url);
+
+            dispatchStories({
+                type: 'STORIES_FETCH_SUCCESS',
+                payload: result.data.hits,
+            });           
+        } catch {
+            dispatchStories({ type: 'STORIES_FETCH_FAILURE' });
+        }
+
     }, [url]);
 
     React.useEffect(() => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import './App.css';
-import {InputWithLabel} from "./InputWithLabel";
+import {SearchForm} from "./SearchForm";
 
 const title = 'React'
 
@@ -96,7 +96,7 @@ const storiesReducer = (state, action) => {
 const getAsyncStories = () =>
     new Promise(resolve =>
         setTimeout(
-            () =>resolve({data: {stories: initialStories}}),
+            () => resolve({data: {stories: initialStories}}),
             2000)
     );
 
@@ -112,12 +112,12 @@ const App = () => {
 
     const [stories, dispatchStories] = React.useReducer(
         storiesReducer,
-        { data: [], isLoading: false, isError: false }
-        );
+        {data: [], isLoading: false, isError: false}
+    );
 
     const handleFetchStories = React.useCallback(async () => {
-        
-        dispatchStories({ type: 'STORIES_FETCH_INIT' });
+
+        dispatchStories({type: 'STORIES_FETCH_INIT'});
 
         try {
             const result = await axios.get(url);
@@ -125,9 +125,9 @@ const App = () => {
             dispatchStories({
                 type: 'STORIES_FETCH_SUCCESS',
                 payload: result.data.hits,
-            });           
+            });
         } catch {
-            dispatchStories({ type: 'STORIES_FETCH_FAILURE' });
+            dispatchStories({type: 'STORIES_FETCH_FAILURE'});
         }
 
     }, [url]);
@@ -147,26 +147,20 @@ const App = () => {
         setSearchTerm(event.target.value);
     };
 
-    const handleSearchSubmit = () => {
+    const handleSearchSubmit = event => {
         setUrl(`${API_ENDPOINT}${searchTerm}`)
+
+        event.preventDefault();
     };
 
     return (
         <div>
             <h1>My Hacker Stories</h1>
 
-            <InputWithLabel
-                id="search"
-                value={searchTerm}
-                isFocused
-                onInputChange={handleSearchInput}
-            >
-                <strong>Search:</strong>
-            </InputWithLabel>
-
-            <button type="button" disabled={!searchTerm} onClick={handleSearchSubmit}>
-                Submit
-            </button>
+            <SearchForm
+                searchTerm={searchTerm}
+                onSearchInput={handleSearchInput}
+                onSearchSubmit={handleSearchSubmit}/>
 
             <hr/>
 
@@ -186,11 +180,11 @@ const App = () => {
 export default App;
 
 export function helloWorld0() {
-  return (
-      <div>
-        <h1>Hello World!</h1>
-      </div>
-  );
+    return (
+        <div>
+            <h1>Hello World!</h1>
+        </div>
+    );
 }
 
 export function helloWorld1() {
@@ -209,7 +203,7 @@ export function helloWorld2() {
             </h1>
 
             <label htmlFor="search">Search: </label>
-            <input id="search" type="text" />
+            <input id="search" type="text"/>
         </div>
     );
 }
@@ -273,7 +267,7 @@ const Item = ({item, onRemoveStory}) => {
             <span>{item.num_comments}</span>
             <span>{item.points}</span>
             <span>
-                <button type="button" onClick={handleRemoveItem.bind(null,item)}>Dismiss</button>
+                <button type="button" onClick={handleRemoveItem.bind(null, item)}>Dismiss</button>
             </span>
         </div>
     );

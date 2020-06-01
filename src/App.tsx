@@ -218,3 +218,5 @@ const Item = ({ item, onRemoveItem }: ItemProps) => (
 );
 
 export default App;
+
+export { List, Item }

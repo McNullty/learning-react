@@ -38,6 +38,12 @@ describe('Item', () => {
 
     expect(component.root.findAllByType(Item).length).toEqual(1);
   });
+
+  it('should render snapshot', () => {
+    let tree = component.toJSON();
+
+    expect(tree).toMatchSnapshot();
+  });
 });
 
 describe('List', () => {
@@ -98,7 +104,7 @@ describe('App', () => {
 
     axios.get.mockImplementationOnce(() => promise);
 
-    let component;
+    let component = null;
 
     await renderer.act(async () => {
       component = renderer.create(<App />);
@@ -112,7 +118,7 @@ describe('App', () => {
 
     axios.get.mockImplementationOnce(() => promise);
 
-    let component;
+    let component = null;
 
     await renderer.act(async () => {
       component = renderer.create(<App />);
